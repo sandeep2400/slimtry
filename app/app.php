@@ -6,7 +6,7 @@
 
 
 	$app->get('/', function() use ($app){
-		echo "hello duder";
+		echo "hello duder";	
 	});
 
 	//get a user
