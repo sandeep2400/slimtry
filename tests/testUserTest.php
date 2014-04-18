@@ -50,6 +50,6 @@
 		    $this->assertEquals($response->status,'204', 'This is a match');
 	    }		
 
-
+//Test adding a new user must throw an eror 
 	}
 ?>
