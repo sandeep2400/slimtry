@@ -1,30 +1,26 @@
 <?php
+
 require ('Config.php');
-	class DbConnect
+class DbConnect
+{
+	private $connection;
+	public function __construct()
 	{
-		private $connection;
-		public function __construct()
-		{
 
+	}
+//Connect to the Database passed in $dbname
+	public function connect($dbname)
+	{
+		try
+		{
+			$connection = new Mongoclient();
+			$db = $connection ->selectDB($dbname);
+			return($db);
 		}
-
-		public function connect()
+		catch(Exception $e)
 		{
-			$connection = new Mongo();
-			$connection_str = sprintf();
-			$m = new MongoClient("mongodb://localhost", array("username" => DB_Username, "password" => DB_Password));
-
-
-			$connecting_string =  sprintf('mongodb://%s:%d/%s', $hosts, $port,$database),
-$connection=  new Mongo($connecting_string,array('username'=>$username,'password'=>$password));
-			try
-			{
-				return();
-			}
-			catch()
-			{
-
-			}
+			echo ('Error Connecting to the Database: '. $e->getMessage().PHP_EOL);
 		}
 	}
+}
 ?>

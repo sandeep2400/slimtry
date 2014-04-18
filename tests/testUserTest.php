@@ -9,27 +9,47 @@
 		public function testurl()
 	    {
 		    $URL = \TEST\URL;
-			$this->assertEquals('http://localhost/slimtry/',$URL, 'This is OK');
+			$this->assertEquals('http://localhost/slimtry/',$URL, 'This does not match');
 //			$this->assertEquals(2,$curlid, 'Ids do not match');	
 
 	    }		
 //testcase to check the get 1 user end-point
-		public function testgetUser()
+		public function testgetexistingUser()
 	    {
 		    $URL = \TEST\URL;
-		    $curlobj = new \curl\curlobj();
-		    $url = $URL.'/user/1';
-		    $data = $curlobj->curlurl($url);
+		    $base_url = $URL.'user/sandeep';
 
-/*		    curl_setopt_array($curl, array(
-		    	CURLOPT_RETURNTRANSFER=>1,
-		    	CURLOPT_URL=>$URL.'/user/1'
-		    	));
-		    $response = curl_exec($curl);
-		    curl_close($curl);	
-*/		    $response = json_decode($data);
-		    $this->assertEquals($response->id,1, 'This is a match');
-//			$this->assertEquals(2,$curlid, 'Ids do not match');	
+		    //Secure the api call
+		    $authobj = new \auth\authobj();
+		    $final_url = $authobj->secure($base_url);
+
+		    //use curl to retrieve the data
+		    $curlobj = new \curl\curlobj();
+		    $data = $curlobj->curlurl($final_url);
+	
+			//decode the data
+		    $response = json_decode($data);
+		    $this->assertEquals($response->lname,'gopal', 'This is a match');
 	    }		
+//test a user that does not exist in the database
+		public function testfakeUser()
+	    {
+		    $URL = \TEST\URL;
+		    $base_url = $URL.'user/pinky';
+
+		    //Secure the api call
+		    $authobj = new \auth\authobj();
+		    $final_url = $authobj->secure($base_url);
+
+		    //use curl to retrieve the data
+		    $curlobj = new \curl\curlobj();
+		    $data = $curlobj->curlurl($final_url);
+			var_dump($data);
+			//decode the data
+		    $response = json_decode($data);
+		    $this->assertEquals($response->status,'204', 'This is a match');
+	    }		
+
+
 	}
 ?>
