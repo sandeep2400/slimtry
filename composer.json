@@ -2,6 +2,7 @@
 	"require":
 		{
 			"slim/slim":"2.*",
-			"phpunit/phpunit":"4.0.*"
+			"phpunit/phpunit":"4.0.*",
+			"monga/monga":"dev-master"
 		}	
 }

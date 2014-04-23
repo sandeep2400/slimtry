@@ -1,6 +1,7 @@
 <?php
 
-require ('Config.php');
+//require ('Config.php');
+require __DIR__.'/Config.php';
 class DbConnect
 {
 	private $connection;
@@ -13,8 +14,11 @@ class DbConnect
 	{
 		try
 		{
-			$connection = new Mongoclient();
-			$db = $connection ->selectDB($dbname);
+			$connection = new Mongo('mongodb://localhost', array(
+						    'username' => DB_Username,
+						    'password' => DB_Password 
+						    ));
+			$db = $connection->selectDB($dbname);
 			return($db);
 		}
 		catch(Exception $e)

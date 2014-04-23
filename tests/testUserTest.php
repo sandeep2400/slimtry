@@ -25,7 +25,7 @@
 
 		    //use curl to retrieve the data
 		    $curlobj = new \curl\curlobj();
-		    $data = $curlobj->curlurl($final_url);
+		    $data = $curlobj->curlget($final_url);
 	
 			//decode the data
 		    $response = json_decode($data);
@@ -43,7 +43,7 @@
 
 		    //use curl to retrieve the data
 		    $curlobj = new \curl\curlobj();
-		    $data = $curlobj->curlurl($final_url);
+		    $data = $curlobj->curlget($final_url);
 			var_dump($data);
 			//decode the data
 		    $response = json_decode($data);
@@ -51,5 +51,30 @@
 	    }		
 
 //Test adding a new user must throw an eror 
+	    public function testadduser()
+	    {
+	    	$URL = \TEST\URL;
+	    	$base_url = $URL.'users';
+
+		    $authobj = new \auth\authobj();
+		    $final_url = $authobj->secure($base_url);
+
+		    $newuser = new stdclass();	
+		    $newuser->fname = 'nadia';
+		    $newuser->lname = 'minor';
+		    $newuser->email = 'nadia@abc@gmail.com';
+		    $newuser->contact = '111-111-111';
+
+		    $data = json_encode($newuser);
+
+	    	//var_dump($data);
+	    	//use curl to post data
+	    	$curlobj = new \curl\curlobj();
+	    	$data = $curlobj->curlpost($final_url, $data);
+		    $response = json_decode($data);
+
+		    $this->assertEquals($response->status,'200', 'This is a match');
+
+	    }
 	}
 ?>
